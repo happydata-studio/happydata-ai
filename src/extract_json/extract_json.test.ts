@@ -1,4 +1,4 @@
-import { extractJSON } from "./extractJSON";
+import { extractJSON } from "./extract_json";
 
 describe('extractJSON', () => {
   it('should extract and parse a valid JSON object from a string', () => {

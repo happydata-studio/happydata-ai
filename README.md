@@ -4,10 +4,11 @@ Welcome to the HappyData AI Utils library! This library provides a set of utilit
 
 ## Features
 
-- **OpenAI Integration**: Easily interact with OpenAI's chat models.
-- **Prompt Management**: Create and manage different types of prompts (User, System, Assistant).
-- **Redaction**: Automatically redact sensitive information such as emails, phone numbers, and more.
-- **JSON Schema Validation**: Validate and enforce JSON structures using Zod schemas.
+- **[HappyAI](/documentation/happy-ai.ts.md)**: Interacting with LLMs (OpenAI, and Ollama).
+- **[Prompt Management](/documentation/prompt.ts.md)**: Create and manage different types of prompts with variable extraction and replacement (User, System, Assistant).
+- **[Redactor](/documentation/redactor.ts.md)**: Automatically redact sensitive information such as emails, phone numbers, and more.
+- **[Schema Management](/documentation/schema.ts.md)**: Enforce JSON outputs with LLMs using Zod schemas.
+- **[Markdown Utils](/documentation/markdown-utils.ts.md)**: Interacting with Markdown content.
 
 ## Installation
 
@@ -102,7 +103,10 @@ const redactedResponse = await HappyAI.chat(message, { redact: true });  // Sens
 console.log(redactedResponse.content);// Sensitive information is repopulated in the response
 ```
 
+
 ### Prompt Management
+
+[Prompt Documentation](/documentation/prompt.ts.md)
 
 Create and manage different types of prompts:
 

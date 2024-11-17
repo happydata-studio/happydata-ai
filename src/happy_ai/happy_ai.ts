@@ -3,7 +3,7 @@ import { ZodSchema } from "zod";
 import { HDSchema } from "../schema/schema";
 import { AssistantPrompt, Prompt, SystemPrompt, UserPrompt } from "../prompt/prompt.class";
 import { Redactor } from "../redactor/redactor.class";
-import { extractJSON } from "../prompt/extractJSON";
+import { extractJSON } from "../extract_json/extract_json";
 import { Ollama } from "ollama";
 
 // Interface for chat options

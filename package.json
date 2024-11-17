@@ -1,10 +1,10 @@
 {
-  "name": "happydata-utils",
+  "name": "happydata-ai-utils",
   "version": "1.0.7",
-  "description": "A collection of utility functions for happy data studio.",
+  "description": "A collection of LLM/AI utility functions for happy data studio.",
   "main": "dist/index.js",
   "repository": {
-    "url": "https://github.com/happydata-studio/happydata-utils.git",
+    "url": "https://github.com/happydata-studio/happydata-ai.git",
     "type": "github"
   },
   "scripts": {
@@ -13,7 +13,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll --coverage"
   },
-  "keywords": [],
+  "keywords": ["ai", "llm", "openai", "ollama","redact"],
   "author": "Happy Data",
   "license": "MIT",
   "devDependencies": {
