@@ -37,47 +37,7 @@ export class Prompt {
 - **`render(variables: Record<string, string>): Prompt`**
   - Similar to `variables`, it replaces placeholders in the content with corresponding values and returns a new `Prompt` instance.
 
-## Examples
-
-### Creating a Basic Prompt
-
-```typescript
-const prompt = new Prompt("Hello, {name}!", "user");
-console.log(prompt.content); // Output: "Hello, {name}!"
-```
-
-```typescript
-const prompt = new Prompt([
-  `You can also use arrays to create multi-line prompts.`,
-  `Here is an example of a very long prompt that is split into multiple lines.`,
-]);
-console.log(prompt.content);
-```
-
-### Extracting Variables
-
-```typescript
-const prompt = new Prompt("Hello, {name}! Your order {orderId} is ready.", "user");
-const variables = prompt.getVariables();
-console.log(variables); // Output: ["name", "orderId"]
-```
-
-### Replacing Variables
-
-```typescript
-const prompt = new Prompt("Hello, {name}!", "user");
-const filledPrompt = prompt.variables({ name: "Alice" });
-console.log(filledPrompt.content); // Output: "Hello, Alice!"
-```
-
-### Using Meta Information
-
-```typescript
-const prompt = new Prompt("Hello, {name}!", "user", { timestamp: Date.now() });
-console.log(prompt.meta); // Output: { timestamp: 1634567890123 }
-```
-
-## Derived Classes
+## Prompt Types
 
 ### `SystemPrompt`
 
@@ -105,3 +65,45 @@ A specialized `Prompt` for assistant messages.
 const assistantPrompt = new AssistantPrompt("How can I assist you today?");
 console.log(assistantPrompt.role); // Output: "assistant"
 ```
+
+
+## Examples
+
+### Creating a Basic Prompt
+
+```typescript
+const prompt = new Prompt("Hello, {name}!", "user");
+console.log(prompt.content); // Output: "Hello, {name}!"
+```
+
+```typescript
+const prompt = new Prompt([
+  `You can also use arrays to create multi-line prompts.`,
+  `Here is an example of a very long prompt that is split into multiple lines.`,
+], "user");
+console.log(prompt.content);
+```
+
+### Extracting Variables
+
+```typescript
+const prompt = new Prompt("Hello, {name}! Your order {orderId} is ready.", "user");
+const variables = prompt.getVariables();
+console.log(variables); // Output: ["name", "orderId"]
+```
+
+### Replacing Variables
+
+```typescript
+const prompt = new Prompt("Hello, {name}!", "user");
+const filledPrompt = prompt.variables({ name: "Alice" });
+console.log(filledPrompt.content); // Output: "Hello, Alice!"
+```
+
+### Using Meta Information
+
+```typescript
+const prompt = new Prompt("Hello, {name}!", "user", { timestamp: Date.now() });
+console.log(prompt.meta); // Output: { timestamp: 1634567890123 }
+```
+
