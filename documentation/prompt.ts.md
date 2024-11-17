@@ -46,6 +46,14 @@ const prompt = new Prompt("Hello, {name}!", "user");
 console.log(prompt.content); // Output: "Hello, {name}!"
 ```
 
+```typescript
+const prompt = new Prompt([
+  `You can also use arrays to create multi-line prompts.`,
+  `Here is an example of a very long prompt that is split into multiple lines.`,
+]);
+console.log(prompt.content);
+```
+
 ### Extracting Variables
 
 ```typescript
