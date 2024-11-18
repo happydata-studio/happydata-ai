@@ -94,21 +94,23 @@ The `chat` method can also be used in streaming mode, allowing you to receive pa
 #### Example with OpenAI
 
 ```typescript
-const stream = happyAI.chat("Tell me a story about a brave knight.", { stream: true });
-
-for await (const token of stream) {
-    console.log(token); // Outputs parts of the story as they are generated
-}
+await happyAI.chat("Tell me a story about a brave knight.", {
+    stream: true,
+    onToken: (token) => {
+        console.log(token); // Outputs parts of the story as they are generated
+    }
+});
 ```
 
 #### Example with Ollama
 
 ```typescript
-const stream = happyAI.chat("Tell me a story about a brave knight.", { stream: true });
-
-for await (const token of stream) {
-    console.log(token); // Outputs parts of the story as they are generated
-}
+await happyAI.chat("Tell me a story about a brave knight.", {
+    stream: true,
+    onToken: (token) => {
+        console.log(token); // Outputs parts of the story as they are generated
+    }
+});
 ```
 
 Certainly! Below are examples demonstrating how to use both a single string and an array of messages with the `chat` and `json` methods in the `HappyAI` class.
