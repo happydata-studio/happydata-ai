@@ -15,9 +15,9 @@ Welcome to the HappyData AI Utils library! This library provides a set of utilit
 To install the library, use npm or yarn:
 
 ```bash
-npm install happydata-ai-utils
+npm install happydata-ai
 # or
-yarn add happydata-ai-utils
+yarn add happydata-ai
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ To use the OpenAI integration, you need to initialize the `HappyAI` class with y
 
 ```typescript
 import OpenAI from "openai";
-import { HappyAI } from "happydata-ai-utils";
+import { HappyAI } from "happydata-ai";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
@@ -51,7 +51,7 @@ console.log(response.content); // Outputs: "Indianapolis"
 #### Using an Array of Messages
 
 ```typescript
-import { UserPrompt, SystemPrompt } from "happydata-ai-utils";
+import { UserPrompt, SystemPrompt } from "happydata-ai";
 
 const messages = [
     new SystemPrompt("You are a helpful assistant."),
@@ -66,22 +66,7 @@ console.log(response.content); // Outputs: "Indianapolis"
 
 To enforce a JSON structure in the response, use the `json` method with a Zod schema. This method also accepts either a single string or an array of messages:
 
-#### Using a String
-
-```typescript
-import { z } from 'zod';
-
-const schema = z.object({
-    city: z.string(),
-    state: z.string(),
-    yearFounded: z.number()
-});
-
-const jsonResponse = await HappyAI.json("What is the capital of Indiana?", { schema });
-console.log(jsonResponse); // Outputs: { city: "Indianapolis", state: "Indiana", yearFounded: 1816 }
-```
-
-#### Using an Array of Messages
+#### With an Array of Messages
 
 ```typescript
 const messages = [
@@ -111,7 +96,7 @@ console.log(redactedResponse.content);// Sensitive information is repopulated in
 Create and manage different types of prompts:
 
 ```typescript
-import { UserPrompt, SystemPrompt, AssistantPrompt } from "happydata-ai-utils";
+import { UserPrompt, SystemPrompt, AssistantPrompt } from "happydata-ai";
 
 const userPrompt = new UserPrompt("User message");
 const systemPrompt = new SystemPrompt("System message");
@@ -123,7 +108,7 @@ const assistantPrompt = new AssistantPrompt("Assistant message");
 Validate JSON data against a Zod schema:
 
 ```typescript
-import { HDSchema } from "happydata-ai-utils";
+import { HDSchema } from "happydata-ai";
 
 const schema = new HDSchema(z.object({
     name: z.string(),
