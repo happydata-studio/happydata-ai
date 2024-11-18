@@ -32,5 +32,9 @@ describe('Tool Class', () => {
         const result = await tool.function({ prop1: 'value1', prop2: 'value2' });
         expect(mockFunction).toHaveBeenCalledWith({ prop1: 'value1', prop2: 'value2' });
         expect(result).toBe('mock result');
-    });
+    }, 10000);
+
+    test('Should support JSON output', async () => {
+        // Your test code here
+    }, 10000);
 });

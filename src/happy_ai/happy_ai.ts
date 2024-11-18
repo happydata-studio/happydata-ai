@@ -52,9 +52,10 @@ export class HappyAI {
                 return `   - ${tool.asString}`;
             }).join('\n')}`,
             `Please! Output which relevant tools (if any) should be used in the JSON format following the provided JSON SCHEMA EXACTLY: ${schema.toString()}`, 
+            `JSON examples based on the above JSON Schema: `,
+            `[{"tool": "toolName1", "props": {"propName": "propValue"}}, {"tool": "toolName2", "props": {"propName": "propValue"}}],`
         ]);
 
-        
 
         let toolsResponse = await this.chat([toolPrompt, ...messages]);
         let selectedTools = extractJSON<z.infer<typeof toolsSchema>>(toolsResponse.content, "array");
