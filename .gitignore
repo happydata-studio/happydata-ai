@@ -93,7 +93,7 @@ out/
 
 # Nuxt.js
 .nuxt/
-dist/
+
 
 # Gatsby files
 .cache/
