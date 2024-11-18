@@ -64,16 +64,27 @@ console.log(response.content); // Outputs: "Indianapolis"
 
 ### JSON Output
 
-To enforce a JSON structure in the response, use the `json` method with a Zod schema. This method also accepts either a single string or an array of messages:
+To enforce a JSON structure in the response, use the `json` method with a Zod schema. First, create a schema using Zod, and then pass it to the `json` method. This method accepts either a single string or an array of messages:
 
 #### With an Array of Messages
 
 ```typescript
+import { z } from "zod";
+import { SystemPrompt, UserPrompt } from "happydata-ai";
+
+// Define a Zod schema
+const schema = z.object({
+    city: z.string(),
+    state: z.string(),
+    yearFounded: z.number()
+});
+
 const messages = [
     new SystemPrompt("You are a helpful assistant."),
     new UserPrompt("What is the capital of Indiana?")
 ];
 
+// Use the schema in the json method
 const jsonResponse = await HappyAI.json(messages, { schema });
 console.log(jsonResponse); // Outputs: { city: "Indianapolis", state: "Indiana", yearFounded: 1816 }
 ```
