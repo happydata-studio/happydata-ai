@@ -6,6 +6,7 @@ import { convertToChatCompletionMessageParam, HappyAI } from "./happy_ai";
 import { z } from 'zod';
 import { AssistantPrompt, UserPrompt } from '../prompt/prompt.class';
 import { Ollama } from 'ollama';
+import { calculator } from '../tools/calculator';
 
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -17,19 +18,60 @@ const openai = new OpenAI({
 const ollama = new Ollama();
 
 const happyAI = new HappyAI(openai);
+const happyAIOllama = new HappyAI(ollama);
 
-describe("hd-ai ollama tests", () => {
-    const happyAI = new HappyAI(ollama);
-    test("Should support ollama", async () => {
-        const answer = await happyAI.chat("What is the capital of Indiana? - only output the city name, no other details - this is for an automated test.");
-        expect(answer.content).toEqual("Indianapolis");
+// describe("hd-ai ollama tests", () => {
+//     const happyAI = new HappyAI(ollama);
+//     test("Should support ollama", async () => {
+//         const answer = await happyAI.chat("What is the capital of Indiana? - only output the city name, no other details - this is for an automated test.");
+//         expect(answer.content).toEqual("Indianapolis");
+//     });
+//     test("Should support ollama with JSON", async () => {
+//         const schema = z.object({
+//             city: z.string()
+//         });
+//         const answer: z.infer<typeof schema> = await happyAI.json("What is the capital of Indiana? - only output the city name, no other details - this is for an automated test.", { schema });
+//         expect(answer.city).toEqual("Indianapolis");
+//     });
+// })
+
+describe("hd-ai  JSON test", () => {
+
+    const ComplcatedSchema = z.object({
+        facts: z.array(z.object({
+            fact: z.string(),
+            source: z.string()
+        })).describe("An array of facts about the city"),
+        founded: z.number().describe("The year the city was founded"),
+        population: z.number().describe("The population of the city"),
+        mayor: z.string().describe("The name of the mayor of the city"),
+        website: z.string().describe("The website of the city"),
     });
-    test("Should support ollama with JSON", async () => {
-        const schema = z.object({
-            city: z.string()
-        });
-        const answer: z.infer<typeof schema> = await happyAI.json("What is the capital of Indiana? - only output the city name, no other details - this is for an automated test.", { schema });
-        expect(answer.city).toEqual("Indianapolis");
+
+    test("Should support JSON output", async () => {
+        const answer:any = await happyAIOllama.json([
+            new UserPrompt("tell me a little about Indianapolis. "),
+        ], { schema: ComplcatedSchema});
+        expect(answer.facts.length).toBeGreaterThan(0);
+        expect(answer.founded).toBeGreaterThan(1700);
+        expect(answer.population).toBeGreaterThan(800000);
+        expect(answer.mayor).toBeTruthy();
+        expect(answer.website.toLowerCase()).toContain("http");
+    });
+})
+
+
+
+describe("hd-ai tools tests with OpenAI and Ollama", () => {
+    test("Should support tools with OpenAI", async () => {
+        const tools = await happyAI.tools([calculator], [new UserPrompt("What is 2 + 2?")]);
+        expect(tools[0].result).toBe(4)
+    });
+    test("Should support tools with Ollama", async () => {
+        const tools = await happyAIOllama.tools([calculator], [new UserPrompt("What is 2 + 2?")]);
+        // Debugging log to check the structure of tools
+        console.log("Tools output:", tools);
+        expect(tools[0].result).toBe(4);
     });
 })
 

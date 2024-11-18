@@ -1,4 +1,4 @@
-import { MarkdownUtils } from './markdown_utils';
+import { MarkdownUtils } from './markdown_utils.class';
 
 describe('MarkdownUtils', () => {
     const markdownSample = `
