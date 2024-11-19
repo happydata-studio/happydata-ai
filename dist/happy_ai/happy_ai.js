@@ -10,6 +10,7 @@ const schema_1 = require("../schema/schema");
 const prompt_class_1 = require("../prompt/prompt.class");
 const redactor_class_1 = require("../redactor/redactor.class");
 const extract_json_1 = require("../extract_json/extract_json");
+const ollama_1 = require("ollama");
 // Main class for handling AI chat interactions
 class HappyAI {
     // Constructor to initialize OpenAI instance
@@ -93,25 +94,25 @@ class HappyAI {
         });
         let stream;
         // Create a stream for chat completions
-        if (this.openai instanceof openai_1.default) {
-            stream = await this.openai.chat.completions.create({
-                messages: chatMessages,
-                stream: true,
-                model: options?.model ?? "gpt-4o-mini",
-            });
-        }
-        else {
+        if (this.openai instanceof ollama_1.Ollama) {
             stream = await this.openai.generate({
                 model: options?.model ?? "llama3.2",
                 prompt: chatMessages.map(msg => msg.content).join("\n"),
                 stream: true
             });
         }
+        else {
+            stream = await this.openai.chat.completions.create({
+                messages: chatMessages,
+                stream: true,
+                model: options?.model ?? "gpt-4o-mini",
+            });
+        }
         const answer = [];
         // Process each chunk of the stream
         try {
             for await (const chunk of stream) {
-                if (this.type === "ollama") {
+                if (this.openai instanceof ollama_1.Ollama) {
                     const content = chunk.response;
                     if (content) {
                         answer.push(content);

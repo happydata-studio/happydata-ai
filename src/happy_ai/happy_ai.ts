@@ -123,20 +123,20 @@ export class HappyAI {
 
         
 
-        let stream:any;
+        let stream: any;
 
         // Create a stream for chat completions
-        if(this.openai instanceof OpenAI){
-            stream = await this.openai.chat.completions.create({
-                messages: chatMessages,
-                stream: true,
-                model: options?.model ?? "gpt-4o-mini",
-            });
-        } else {
+        if (this.openai instanceof Ollama) {
             stream = await this.openai.generate({
                 model: options?.model ?? "llama3.2",
                 prompt: chatMessages.map(msg => msg.content).join("\n"),
                 stream: true
+            });
+        } else {
+            stream = await this.openai.chat.completions.create({
+                messages: chatMessages,
+                stream: true,
+                model: options?.model ?? "gpt-4o-mini",
             });
         }
 
@@ -145,7 +145,7 @@ export class HappyAI {
         // Process each chunk of the stream
         try {
             for await (const chunk of stream) {
-                if(this.type === "ollama"){
+                if (this.openai instanceof Ollama) {
                     const content = chunk.response;
                     if (content) {
                         answer.push(content);

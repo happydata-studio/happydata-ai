@@ -105,7 +105,7 @@ await happyAI.chat("Tell me a story about a brave knight.", {
 #### Example with Ollama
 
 ```typescript
-await happyAI.chat("Tell me a story about a brave knight.", {
+await happyAI.chat("Tell me a story about a bra ve knight.", {
     stream: true,
     onToken: (token) => {
         console.log(token); // Outputs parts of the story as they are generated
